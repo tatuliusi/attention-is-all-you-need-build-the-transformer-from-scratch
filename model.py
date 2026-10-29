@@ -81,8 +81,13 @@ import torch
 def build_position_index_column(max_len):
     return torch.arange(0, max_len, dtype=torch.float32).unsqueeze(1)
 
-# Step 10 - fill_even_indices_with_sin (not yet solved)
-# TODO: implement
+# Step 10 - fill_even_indices_with_sin
+import torch
+
+def fill_even_indices_with_sin(pe, position, div_term):
+    out = pe.clone()
+    out[:, 0::2] = torch.sin(position * div_term).to(pe.dtype)
+    return out
 
 # Step 11 - fill_odd_indices_with_cos (not yet solved)
 # TODO: implement
