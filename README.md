@@ -23,8 +23,8 @@ python scaffold.py
 - [x] **11.** fill_odd_indices_with_cos
 - [x] **12.** build_sinusoidal_positional_encoding
 - [x] **13.** add_positional_encoding_to_embeddings
-- [ ] **14.** build_padding_mask
-- [ ] **15.** build_causal_mask
+- [x] **14.** build_padding_mask
+- [x] **15.** build_causal_mask
 - [ ] **16.** combine_padding_and_causal_masks
 - [ ] **17.** compute_raw_attention_scores
 - [ ] **18.** scale_attention_scores
