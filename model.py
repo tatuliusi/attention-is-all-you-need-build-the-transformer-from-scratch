@@ -165,8 +165,10 @@ import torch
 def scaled_dot_product_attention(query, key, value, mask=None):
     d_k = query.size(-1); s = scale_attention_scores(compute_raw_attention_scores(query, key), d_k); s = s if mask is None else mask_attention_scores_with_neg_inf(s, mask); w = softmax_attention_weights(s); return apply_attention_weights_to_values(w, value), w
 
-# Step 23 - split_last_dim_into_heads (not yet solved)
-# TODO: implement
+# Step 23 - split_last_dim_into_heads
+import torch
+def split_last_dim_into_heads(tensor, num_heads):
+    return tensor.reshape(tensor.size(0), tensor.size(1), num_heads, tensor.size(-1) // num_heads)
 
 # Step 24 - transpose_heads_before_sequence (not yet solved)
 # TODO: implement
