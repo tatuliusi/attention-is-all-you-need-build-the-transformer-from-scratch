@@ -175,8 +175,10 @@ import torch
 def transpose_heads_before_sequence(split_tensor):
     return split_tensor.transpose(1, 2)
 
-# Step 25 - merge_heads_back_to_model_dim (not yet solved)
-# TODO: implement
+# Step 25 - merge_heads_back_to_model_dim
+import torch
+def merge_heads_back_to_model_dim(multi_head_tensor):
+    b, h, l, d = multi_head_tensor.shape; return multi_head_tensor.transpose(1, 2).contiguous().view(b, l, h * d)
 
 # Step 26 - apply_linear_projection (not yet solved)
 # TODO: implement
