@@ -180,8 +180,10 @@ import torch
 def merge_heads_back_to_model_dim(multi_head_tensor):
     b, h, l, d = multi_head_tensor.shape; return multi_head_tensor.transpose(1, 2).contiguous().view(b, l, h * d)
 
-# Step 26 - apply_linear_projection (not yet solved)
-# TODO: implement
+# Step 26 - apply_linear_projection
+import torch
+def apply_linear_projection(x, weight, bias):
+    out = x @ weight.T; return out if bias is None else out + bias
 
 # Step 27 - project_to_query_key_value (not yet solved)
 # TODO: implement
