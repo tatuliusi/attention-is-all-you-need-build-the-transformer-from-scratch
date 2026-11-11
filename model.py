@@ -190,8 +190,10 @@ import torch
 def project_to_query_key_value(x, w_q, b_q, w_k, b_k, w_v, b_v):
     return apply_linear_projection(x, w_q, b_q), apply_linear_projection(x, w_k, b_k), apply_linear_projection(x, w_v, b_v)
 
-# Step 28 - split_qkv_into_heads (not yet solved)
-# TODO: implement
+# Step 28 - split_qkv_into_heads
+import torch
+def split_qkv_into_heads(q, k, v, num_heads):
+    return tuple(transpose_heads_before_sequence(split_last_dim_into_heads(t, num_heads)) for t in (q, k, v))
 
 # Step 29 - multi_head_scaled_dot_product_attention (not yet solved)
 # TODO: implement
