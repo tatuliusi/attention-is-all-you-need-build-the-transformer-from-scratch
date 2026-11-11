@@ -195,8 +195,10 @@ import torch
 def split_qkv_into_heads(q, k, v, num_heads):
     return tuple(transpose_heads_before_sequence(split_last_dim_into_heads(t, num_heads)) for t in (q, k, v))
 
-# Step 29 - multi_head_scaled_dot_product_attention (not yet solved)
-# TODO: implement
+# Step 29 - multi_head_scaled_dot_product_attention
+import torch
+def multi_head_scaled_dot_product_attention(q_h, k_h, v_h, mask=None):
+    return scaled_dot_product_attention(q_h, k_h, v_h, mask)
 
 # Step 30 - merge_heads_and_project_output (not yet solved)
 # TODO: implement
