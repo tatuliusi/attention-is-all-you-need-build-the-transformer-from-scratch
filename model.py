@@ -210,8 +210,10 @@ import torch
 def assemble_multi_head_attention_forward(query, key, value, w_q, w_k, w_v, w_o, num_heads, mask=None):
     q = apply_linear_projection(query, w_q, None); k = apply_linear_projection(key, w_k, None); v = apply_linear_projection(value, w_v, None); q_h, k_h, v_h = split_qkv_into_heads(q, k, v, num_heads); ctx, _ = scaled_dot_product_attention(q_h, k_h, v_h, mask); return merge_heads_and_project_output(ctx, w_o, None)
 
-# Step 32 - apply_ffn_first_linear_and_relu (not yet solved)
-# TODO: implement
+# Step 32 - apply_ffn_first_linear_and_relu
+import torch
+def apply_ffn_first_linear_and_relu(x, w1, b1):
+    return torch.relu(x @ w1 + b1)
 
 # Step 33 - apply_ffn_second_linear (not yet solved)
 # TODO: implement
