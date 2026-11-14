@@ -250,8 +250,10 @@ import torch
 def encoder_layer_self_attention_sublayer(x, w_q, w_k, w_v, w_o, gamma, beta, num_heads, src_mask):
     attn = assemble_multi_head_attention_forward(x, x, x, w_q, w_k, w_v, w_o, num_heads, src_mask); return apply_residual_add_and_norm(x, attn, gamma, beta)
 
-# Step 40 - encoder_layer_feed_forward_sublayer (not yet solved)
-# TODO: implement
+# Step 40 - encoder_layer_feed_forward_sublayer
+import torch
+def encoder_layer_feed_forward_sublayer(x, w1, b1, w2, b2, gamma, beta):
+    return apply_residual_add_and_norm(x, position_wise_feed_forward_network(x, w1, b1, w2, b2), gamma, beta)
 
 # Step 41 - assemble_encoder_layer (not yet solved)
 # TODO: implement
