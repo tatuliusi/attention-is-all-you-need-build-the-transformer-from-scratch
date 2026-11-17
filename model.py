@@ -255,8 +255,10 @@ import torch
 def encoder_layer_feed_forward_sublayer(x, w1, b1, w2, b2, gamma, beta):
     return apply_residual_add_and_norm(x, position_wise_feed_forward_network(x, w1, b1, w2, b2), gamma, beta)
 
-# Step 41 - assemble_encoder_layer (not yet solved)
-# TODO: implement
+# Step 41 - assemble_encoder_layer
+import torch
+def assemble_encoder_layer(x, layer_params, num_heads, src_mask):
+    p = layer_params; h = encoder_layer_self_attention_sublayer(x, p['w_q'], p['w_k'], p['w_v'], p['w_o'], p['attn_gamma'], p['attn_beta'], num_heads, src_mask); return encoder_layer_feed_forward_sublayer(h, p['w1'], p['b1'], p['w2'], p['b2'], p['ffn_gamma'], p['ffn_beta'])
 
 # Step 42 - stack_encoder_layers (not yet solved)
 # TODO: implement
