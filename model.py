@@ -260,8 +260,11 @@ import torch
 def assemble_encoder_layer(x, layer_params, num_heads, src_mask):
     p = layer_params; h = encoder_layer_self_attention_sublayer(x, p['w_q'], p['w_k'], p['w_v'], p['w_o'], p['attn_gamma'], p['attn_beta'], num_heads, src_mask); return encoder_layer_feed_forward_sublayer(h, p['w1'], p['b1'], p['w2'], p['b2'], p['ffn_gamma'], p['ffn_beta'])
 
-# Step 42 - stack_encoder_layers (not yet solved)
-# TODO: implement
+# Step 42 - stack_encoder_layers
+import torch
+from functools import reduce
+def stack_encoder_layers(x, encoder_layer_params_list, num_heads, src_mask):
+    return reduce(lambda h, p: assemble_encoder_layer(h, p, num_heads, src_mask), encoder_layer_params_list, x)
 
 # Step 43 - decoder_layer_masked_self_attention_sublayer (not yet solved)
 # TODO: implement
