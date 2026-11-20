@@ -312,8 +312,12 @@ import torch
 def run_transformer_forward(src_ids, tgt_ids, model_params, num_heads, pad_id):
     p = model_params; d = p['src_embedding'].size(-1); src_mask = build_padding_mask(src_ids, pad_id); tgt_mask = combine_padding_and_causal_masks(build_padding_mask(tgt_ids, pad_id), build_causal_mask(tgt_ids.size(1))); x = add_positional_encoding_to_embeddings(scale_embeddings_by_sqrt_d_model(p['src_embedding'][src_ids], d), build_sinusoidal_positional_encoding(src_ids.size(1), d)); y = add_positional_encoding_to_embeddings(scale_embeddings_by_sqrt_d_model(p['tgt_embedding'][tgt_ids], d), build_sinusoidal_positional_encoding(tgt_ids.size(1), d)); enc = stack_encoder_layers(x, p['encoder_layers'], num_heads, src_mask); dec = stack_decoder_layers(y, enc, p['decoder_layers'], num_heads, src_mask, tgt_mask); return apply_log_softmax_over_vocab(apply_final_output_projection(dec, p['output_projection']))
 
-# Step 52 - init_encoder_layer_parameters (not yet solved)
-# TODO: implement
+# Step 52 - init_encoder_layer_parameters
+import torch
+import math
+def _xavier(i, o): return ((torch.rand(i, o) * 2 - 1) * math.sqrt(6.0 / (i + o))).requires_grad_(True)
+def init_encoder_layer_parameters(d_model, num_heads, d_ff):
+    return {'w_q': _xavier(d_model, d_model), 'w_k': _xavier(d_model, d_model), 'w_v': _xavier(d_model, d_model), 'w_o': _xavier(d_model, d_model), 'w1': _xavier(d_model, d_ff), 'b1': torch.zeros(d_ff, requires_grad=True), 'w2': _xavier(d_ff, d_model), 'b2': torch.zeros(d_model, requires_grad=True), 'attn_gamma': torch.ones(d_model, requires_grad=True), 'attn_beta': torch.zeros(d_model, requires_grad=True), 'ffn_gamma': torch.ones(d_model, requires_grad=True), 'ffn_beta': torch.zeros(d_model, requires_grad=True)}
 
 # Step 53 - init_decoder_layer_parameters (not yet solved)
 # TODO: implement
