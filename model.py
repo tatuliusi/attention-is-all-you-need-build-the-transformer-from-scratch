@@ -319,8 +319,12 @@ def _xavier(i, o): return ((torch.rand(i, o) * 2 - 1) * math.sqrt(6.0 / (i + o))
 def init_encoder_layer_parameters(d_model, num_heads, d_ff):
     return {'w_q': _xavier(d_model, d_model), 'w_k': _xavier(d_model, d_model), 'w_v': _xavier(d_model, d_model), 'w_o': _xavier(d_model, d_model), 'w1': _xavier(d_model, d_ff), 'b1': torch.zeros(d_ff, requires_grad=True), 'w2': _xavier(d_ff, d_model), 'b2': torch.zeros(d_model, requires_grad=True), 'attn_gamma': torch.ones(d_model, requires_grad=True), 'attn_beta': torch.zeros(d_model, requires_grad=True), 'ffn_gamma': torch.ones(d_model, requires_grad=True), 'ffn_beta': torch.zeros(d_model, requires_grad=True)}
 
-# Step 53 - init_decoder_layer_parameters (not yet solved)
-# TODO: implement
+# Step 53 - init_decoder_layer_parameters
+import torch
+import math
+def _xavier(i, o): return ((torch.rand(i, o) * 2 - 1) * math.sqrt(6.0 / (i + o))).requires_grad_(True)
+def init_decoder_layer_parameters(d_model, num_heads, d_ff):
+    return {**{k: _xavier(d_model, d_model) for k in ['w_q_self', 'w_k_self', 'w_v_self', 'w_o_self', 'w_q_cross', 'w_k_cross', 'w_v_cross', 'w_o_cross']}, 'w1': _xavier(d_model, d_ff), 'b1': torch.zeros(d_ff, requires_grad=True), 'w2': _xavier(d_ff, d_model), 'b2': torch.zeros(d_model, requires_grad=True), **{n + '_gamma': torch.ones(d_model, requires_grad=True) for n in ['self', 'cross', 'ffn']}, **{n + '_beta': torch.zeros(d_model, requires_grad=True) for n in ['self', 'cross', 'ffn']}}
 
 # Step 54 - init_embedding_and_projection_parameters (not yet solved)
 # TODO: implement
