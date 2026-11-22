@@ -326,8 +326,12 @@ def _xavier(i, o): return ((torch.rand(i, o) * 2 - 1) * math.sqrt(6.0 / (i + o))
 def init_decoder_layer_parameters(d_model, num_heads, d_ff):
     return {**{k: _xavier(d_model, d_model) for k in ['w_q_self', 'w_k_self', 'w_v_self', 'w_o_self', 'w_q_cross', 'w_k_cross', 'w_v_cross', 'w_o_cross']}, 'w1': _xavier(d_model, d_ff), 'b1': torch.zeros(d_ff, requires_grad=True), 'w2': _xavier(d_ff, d_model), 'b2': torch.zeros(d_model, requires_grad=True), **{n + '_gamma': torch.ones(d_model, requires_grad=True) for n in ['self', 'cross', 'ffn']}, **{n + '_beta': torch.zeros(d_model, requires_grad=True) for n in ['self', 'cross', 'ffn']}}
 
-# Step 54 - init_embedding_and_projection_parameters (not yet solved)
-# TODO: implement
+# Step 54 - init_embedding_and_projection_parameters
+import torch
+import math
+def _emb(v, d): return (torch.randn(v, d) / math.sqrt(d)).requires_grad_(True)
+def init_embedding_and_projection_parameters(vocab_size, d_model, tie_weights=True):
+    return (lambda s, t: {'src_embedding': s, 'tgt_embedding': t, 'output_projection': t if tie_weights else _emb(vocab_size, d_model)})(_emb(vocab_size, d_model), _emb(vocab_size, d_model))
 
 # Step 55 - collect_model_parameters_into_list (not yet solved)
 # TODO: implement
