@@ -333,8 +333,10 @@ def _emb(v, d): return (torch.randn(v, d) / math.sqrt(d)).requires_grad_(True)
 def init_embedding_and_projection_parameters(vocab_size, d_model, tie_weights=True):
     return (lambda s, t: {'src_embedding': s, 'tgt_embedding': t, 'output_projection': t if tie_weights else _emb(vocab_size, d_model)})(_emb(vocab_size, d_model), _emb(vocab_size, d_model))
 
-# Step 55 - collect_model_parameters_into_list (not yet solved)
-# TODO: implement
+# Step 55 - collect_model_parameters_into_list
+import torch
+def collect_model_parameters_into_list(*args, **kwargs):
+    return (lambda ts: [t for i, t in enumerate(ts) if all(t is not u for u in ts[:i])])([t for g in list(args) + list(kwargs.values()) for d in (g if isinstance(g, (list, tuple)) else [g]) for t in d.values()])
 
 # Step 56 - shift_targets_right_with_start_token (not yet solved)
 # TODO: implement
