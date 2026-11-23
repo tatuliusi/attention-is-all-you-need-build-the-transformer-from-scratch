@@ -338,8 +338,10 @@ import torch
 def collect_model_parameters_into_list(*args, **kwargs):
     return (lambda ts: [t for i, t in enumerate(ts) if all(t is not u for u in ts[:i])])([t for g in list(args) + list(kwargs.values()) for d in (g if isinstance(g, (list, tuple)) else [g]) for t in d.values()])
 
-# Step 56 - shift_targets_right_with_start_token (not yet solved)
-# TODO: implement
+# Step 56 - shift_targets_right_with_start_token
+import torch
+def shift_targets_right_with_start_token(target_ids, start_token_id):
+    return torch.cat([torch.full_like(target_ids[:, :1], start_token_id), target_ids[:, :-1]], dim=1)
 
 # Step 57 - compute_noam_learning_rate (not yet solved)
 # TODO: implement
