@@ -362,8 +362,10 @@ import torch
 def zero_pad_column_and_pad_token_rows(distribution, gold_token_ids, pad_id):
     return (lambda d: (d.__setitem__((Ellipsis, pad_id), 0.0), d.masked_fill_((gold_token_ids == pad_id).unsqueeze(-1), 0.0), d)[-1])(distribution.clone())
 
-# Step 61 - compute_label_smoothed_kl_loss (not yet solved)
-# TODO: implement
+# Step 61 - compute_label_smoothed_kl_loss
+import torch
+def compute_label_smoothed_kl_loss(log_probabilities, smoothed_distribution):
+    return torch.where(smoothed_distribution > 0, -smoothed_distribution * log_probabilities, torch.zeros_like(log_probabilities)).sum()
 
 # Step 62 - average_loss_over_non_pad_tokens (not yet solved)
 # TODO: implement
